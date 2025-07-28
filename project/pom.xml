@@ -43,6 +43,13 @@
       <version>${spring.version}</version>
     </dependency>
     
+    <!-- Spring Context -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    
     <!-- AOP (Spring AOP with Aspectjweaver) -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -147,10 +154,10 @@
   
   <build>
     <plugins>
-      <!-- Compile (*.java To *.class) -->
+      <!-- Compiler (*.java To *.class) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compile-plugin</artifactId>
+        <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
           <source>${java.version}</source>
