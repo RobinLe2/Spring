@@ -1,4 +1,4 @@
-package org.shark.ioc.ex01_xml;
+package org.shark.ioc.chap01_xml;
 
 public class Multiplier {
 

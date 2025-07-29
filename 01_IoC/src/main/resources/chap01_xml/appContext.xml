@@ -19,7 +19,7 @@
       1) scope          : 빈의 범위를 설정합니다. (디폴트는 singleton입니다. singleton, prototype, request, session)
       2) lazy-init      : 지연 초기화를 설정합니다. (디폴트는 false입니다. true/false)
       3) init-method    : 빈 초기화 이후 실행할 메소드입니다.
-      3) destroy-method : 빈 소멸 이전 실행할 메소드입니다.
+      4) destroy-method : 빈 소멸 이전 실행할 메소드입니다.
   -->
 
   <!-- Bean 등록하기 (Spring Container에 저장됩니다.) -->
