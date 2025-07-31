@@ -12,5 +12,10 @@
 <body>
   <h1>/c/detail</h1>
   ${board}
+  <script type="text/javascript">
+    const msg = "${msg}";
+    if (msg !== "")
+      alert(msg);
+  </script>
 </body>
 </html>

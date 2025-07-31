@@ -40,20 +40,20 @@ public class MvcControllerC {
    */
   
   //----- ModelAndView를 이용한 forward (데이터 전달)
-  @RequestMapping("/list")  //----- 요청 주소 : /c/list
+  @RequestMapping("/list.do")  //-------- 요청 주소 : /c/list.do
   public ModelAndView methodA() {
     ModelAndView mv = new ModelAndView();
-    mv.setViewName("c/list");
+    mv.setViewName("c/list");  //-------- JSP 이름
     mv.addObject("boards", boards);  //-- JSP로 전달되는 데이터 boards
     return mv;
   }
   
   //----- Model을 이용한 forward (데이터 전달)
-  @RequestMapping("/detail")  //----------- 요청 주소 : /c/detail?bid=1
+  @RequestMapping("/detail.do")  //-------- 요청 주소 : /c/detail.do?bid=1
   public String methodB(Model model  //---- JSP로 전달할 데이터를 저장할 Model
                       , int bid) {  //----- @RequestParam 생략
     model.addAttribute("board", boards.get(bid));  //-- JSP로 전달되는 데이터 board
-    return "c/detail";
+    return "c/detail";  //----------------- JSP 이름
   }
 
   /****************************** redirect ******************************/
@@ -74,7 +74,7 @@ public class MvcControllerC {
    */
   
   //----- RedirectAttributes를 이용한 redirect
-  @RequestMapping("/regist")  //----- 요청 주소 : /c/regist?title=신규제목&hit=0
+  @RequestMapping("/regist.do")  //----- 요청 주소 : /c/regist.do?title=신규제목&hit=0
   public String methodC(RedirectAttributes redirectAttrs
                       , String title
                       , int hit) {
@@ -89,19 +89,26 @@ public class MvcControllerC {
     redirectAttrs.addFlashAttribute("msg", msg);
     
     //----- redirect (새로운 요청 주소로 리다이렉트 구성)
-    return "redirect:/c/list";
+    return "redirect:/c/list.do";  //----- 새로운 요청 주소
     
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  //----- RedirectAttributes를 이용한 redirect
+  @RequestMapping("/modify.do")  //----- 요청 주소 : /c/modify.do?bid=0&title=수정제목&hit=10
+  public String methodE(RedirectAttributes redirectAttrs
+                      , int bid
+                      , String title
+                      , int hit) {
+    
+    //----- 수정
+    BoardDTO prevBoard = boards.set(bid, new BoardDTO(title, hit));
+    
+    //----- 수정 성공 메시지 저장
+    redirectAttrs.addFlashAttribute("msg", "수정 성공 " + prevBoard);
+    
+    //----- redirect
+    return "redirect:/c/detail.do?bid=" + bid;  //----- 새로운 요청 주소로 리다이렉트
+    
+  }
   
 }
