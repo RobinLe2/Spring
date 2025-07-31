@@ -58,7 +58,7 @@ public class MvcControllerC {
   }
   
   /*
-   * org.springframework.web.bind.annotation.ModelAttribute
+   * @ModelAttribute
    * 
    * 1. 컨트롤러 메소드 또는 파라미터에 사용하는 어노테이션입니다.
    * 2. Model에 자동으로 데이터를 바인딩하여 View(JSP)에 전달하는 역할을 합니다.
