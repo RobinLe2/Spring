@@ -12,5 +12,10 @@
 <body>
   <h1>/c/list</h1>
   ${boards}
+  <script type="text/javascript">
+    const msg = "${msg}";
+    if (msg !== "")
+      alert(msg);
+  </script>
 </body>
 </html>
