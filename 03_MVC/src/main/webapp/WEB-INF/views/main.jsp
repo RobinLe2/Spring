@@ -15,6 +15,5 @@
   
   <img alt="로딩중..." src="${contextPath}/resources/image/loading.gif">
   
-  
 </body>
 </html>

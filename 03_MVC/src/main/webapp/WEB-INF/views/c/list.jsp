@@ -12,6 +12,8 @@
 <body>
   <h1>/c/list</h1>
   ${boards}
+  <br>
+  ${common}
   <script type="text/javascript">
     const msg = "${msg}";
     if (msg !== "")

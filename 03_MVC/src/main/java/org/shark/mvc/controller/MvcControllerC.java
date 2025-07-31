@@ -6,6 +6,7 @@ import java.util.List;
 import org.shark.mvc.model.dto.BoardDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -54,6 +55,30 @@ public class MvcControllerC {
                       , int bid) {  //----- @RequestParam 생략
     model.addAttribute("board", boards.get(bid));  //-- JSP로 전달되는 데이터 board
     return "c/detail";  //----------------- JSP 이름
+  }
+  
+  /*
+   * org.springframework.web.bind.annotation.ModelAttribute
+   * 
+   * 1. 컨트롤러 메소드 또는 파라미터에 사용하는 어노테이션입니다.
+   * 2. Model에 자동으로 데이터를 바인딩하여 View(JSP)에 전달하는 역할을 합니다.
+   * 3. 용도
+   *    1) 컨트롤러 메소드 : 모든 요청 메소드 이전에 먼저 실행되어 공통적으로 Model에 데이터를 저장합니다.
+   *    2) 파라미터 : 요청 파라미터(또는 폼 데이터)를 자바 객체에 자동으로 바인딩합니다.
+   */
+
+  //----- @ModelAttribute를 이용한 공통값 처리  
+  @ModelAttribute("common")
+  public String comonAttr() {
+    return "공통값";  //----- 모든 View(JSP)에서 ${common}으로 접근할 수 있습니다.
+  }
+    
+  //----- @ModelAttribute를 이용한 forward (데이터 전달)
+  @RequestMapping("/submit.do")  //----- 요청 주소 : /c/submit.do?title=제목&hit=10
+  public String submit(@ModelAttribute(name = "board") BoardDTO board) {  //----- Model에 board라는 이름으로 BoardDTO board 객체가 저장됩니다. => JSP에서 ${board} 확인
+                                                                          //----- name = "board"를 생략하면 (@ModelAttribute BoardDTO board) Model에 boardDTO(타입을 이름으로 사용)라는 이름으로 BoardDTO board 객체가 저장됩니다. => JSP에서 ${boardDTO} 확인
+                                                                          //----- @ModelAttribute를 생략할 수 있습니다.(스프링 3.2 이후) 이 경우 Model에 boardDTO라는 이름으로 BoardDTO board 객체가 저장됩니다. => JSP에서 ${boardDTO} 확인
+    return "c/detail";  //-------------- JSP 이름
   }
 
   /****************************** redirect ******************************/
