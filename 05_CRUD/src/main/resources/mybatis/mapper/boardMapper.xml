@@ -34,7 +34,7 @@
   </select>
   
   <!-- 조회 (단일) -->
-  <select id="getBoardById" parameterType="int" resultMap="boardResultMap">
+  <select id="getBoardById" parameterType="java.lang.Integer" resultMap="boardResultMap">
     SELECT b.bid, u.uid, u.email, u.nickname, b.title, b.content, b.created_at, b.modified_at
       FROM tbl_user AS u INNER JOIN tbl_board AS b
         ON u.uid = b.uid
@@ -63,7 +63,7 @@
   </update>
   
   <!-- 삭제 (단일) -->
-  <delete id="deleteBoardById" parameterType="int">
+  <delete id="deleteBoardById" parameterType="java.lang.Integer">
     DELETE
       FROM tbl_board
      WHERE bid = #{bid}

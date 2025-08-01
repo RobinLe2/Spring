@@ -14,7 +14,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class UserDTO {
-  private int uid;
+  private Integer uid;
   private String email;
   private String password;
   private String nickname;

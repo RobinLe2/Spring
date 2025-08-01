@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor  //----- SqlSessionTemplate template 빈(Bean) 자동 주입(@Autowired) 처리를 위한 생성자
+@RequiredArgsConstructor  //----- Spring Container에 있는 SqlSessionTemplate 타입의 빈을 
+                          //      private final SqlSessionTemplate template에 자동 주입(@Autowired)하기 위한 생성자
 @Repository  //------------------ DAO 레벨에서 사용하는 @Component
 public class UserDAO {
 
