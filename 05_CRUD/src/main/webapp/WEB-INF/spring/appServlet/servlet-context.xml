@@ -18,4 +18,13 @@
    
    <context:component-scan base-package="org.shark.crud" />
    
+   <!-- Interceptor 등록하기 -->
+   <interceptors>
+      <interceptor>
+        <mapping path="/board/write" />
+        <mapping path="/user/myinfo" />
+        <beans:bean class="org.shark.crud.interceptor.LoginCheckInterceptor" />
+      </interceptor>
+   </interceptors>
+   
 </beans:beans>

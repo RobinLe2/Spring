@@ -84,7 +84,7 @@ public class MvcControllerC {
   /****************************** redirect ******************************/
   
   /*
-   * org.springframework.web.servlet.mvc.support.RedirectAttributes
+   * @RedirectAttributes
    * 
    * 1. 리다이렉트 시 데이터를 일시적으로 전달하는데 사용하는 인터페이스입니다.
    * 2. 리다이렉트 시 Model에 저장한 데이터는 소멸되므로(새로운 요청이기 때문에) RedirectAttributes를 사용해야 합니다.
