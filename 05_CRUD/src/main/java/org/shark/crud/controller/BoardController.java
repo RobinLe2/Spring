@@ -33,8 +33,7 @@ public class BoardController {
   }
   
   @GetMapping("/write")
-  public String writeForm(HttpSession session) {
-    session.setAttribute("nickname", "shark");
+  public String writeForm() {
     return "board/write";  //----- board 폴더 아래 write.jsp로 forward 합니다.
   }
   

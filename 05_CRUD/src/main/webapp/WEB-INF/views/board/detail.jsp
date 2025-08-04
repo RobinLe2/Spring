@@ -2,15 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="redirectURL" value="${pageContext.request.requestURI}" />
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
-</head>
-<body>
+
+<jsp:include page="../layout/header.jsp">
+  <jsp:param value="${board.bid}번 게시글" name="title"/>
+</jsp:include>
 
   <h1>Board Detail</h1>
   
@@ -31,8 +26,6 @@
     function onModifyForm() {
       location.href = "${contextPath}/board/modify?bid=${board.bid}";
     }
-  	const msg = "${msg}";
-  	if (msg !== "") alert(msg);
   </script>
 
 </body>
