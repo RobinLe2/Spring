@@ -25,12 +25,18 @@
   </resultMap>
   
   <!-- 조회 (목록) -->
-  <select id="getBoards" parameterType="String" resultMap="boardResultMap">
+  <select id="getBoards" resultMap="boardResultMap">
     SELECT b.bid, u.uid, u.email, u.nickname, b.title, b.content, b.created_at, b.modified_at
       FROM tbl_user AS u INNER JOIN tbl_board AS b
         ON u.uid = b.uid
      ORDER BY bid DESC
      LIMIT 0, 10
+  </select>
+  
+  <!-- 조회 (개수) -->
+  <select id="getBoardCount" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+      FROM tbl_board
   </select>
   
   <!-- 조회 (단일) -->

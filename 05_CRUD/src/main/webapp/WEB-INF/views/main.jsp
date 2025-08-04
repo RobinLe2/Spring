@@ -11,17 +11,9 @@
 </head>
 <body>
 
-  <c:if test="${empty sessionScope.nickname}">
-    <a href="${contextPath}/user/login?currentURL=${currentURL}">로그인</a>
-  </c:if>
-  <c:if test="${not empty sessionScope.nickname}">
-    <p>${sessionScope.nickname}님 반갑습니다</p>
-    <a href="${contextPath}/user/logout">로그아웃</a>
-  </c:if>
-
-  <hr>
-
   <h1>Hello World</h1>
+  
+  <a href="${contextPath}/board/list">게시판</a>
   
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.shark.crud.model.dto.BoardDTO;
 
 public interface BoardService {
   List<BoardDTO> findAllBoards();
+  Integer getBoardCount();
   BoardDTO findBoardById(Integer bid);
   boolean addBoard(BoardDTO board);
   boolean modifyBoard(BoardDTO board);
