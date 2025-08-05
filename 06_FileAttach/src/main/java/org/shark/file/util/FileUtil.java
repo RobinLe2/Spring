@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component  //----- Spring Container에 FileUtil 타입의 빈을 등록합니다.
 public class FileUtil {
 
-  private LocalDate today = LocalDate.now();
+  private final LocalDate today = LocalDate.now();
   
   /**
    * 파일 업로드 경로를 반환하는 메소드
