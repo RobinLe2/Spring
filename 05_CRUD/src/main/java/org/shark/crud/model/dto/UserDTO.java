@@ -17,5 +17,6 @@ public class UserDTO {
   private Integer uid;
   private String email;
   private String password;
+  private byte[] salt;
   private String nickname;
 }
