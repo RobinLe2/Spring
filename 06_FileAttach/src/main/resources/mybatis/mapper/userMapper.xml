@@ -19,7 +19,7 @@
   
   <insert id="insertUser" parameterType="UserDTO">
     INSERT INTO tbl_user (email, file_path, original_filename, filesystem_name)
-    VALUES (#{email}, #{file_path}, #{original_filename}, #{filesystem_name})
+    VALUES (#{email}, #{filePath}, #{originalFilename}, #{filesystemName})
   </insert>
   
 </mapper>
