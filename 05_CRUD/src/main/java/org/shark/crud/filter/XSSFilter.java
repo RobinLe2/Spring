@@ -21,7 +21,6 @@ public class XSSFilter implements Filter {
   //----- 요청 (request)이 XSSRequestWrapper에 의해서 처리됩니다.
   @Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-    System.out.println("===== XSSFilter 동작 =====");
     chain.doFilter(new XSSRequestWrapper((HttpServletRequest)request), response);
 	}
 
