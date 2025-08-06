@@ -14,10 +14,12 @@ import org.shark.file.util.FileUtil;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional  //----- 서비스 클래스 레벨에 설정한 @Transactional에 의해서 모든 메소드는 트랜잭션 처리가 됩니다.
 @RequiredArgsConstructor
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -25,11 +27,13 @@ public class NoticeServiceImpl implements NoticeService {
   private final NoticeDAO noticeDAO;
   private final FileUtil fileUtil;
   
+  @Transactional(readOnly = true)  //----- 읽기 전용 최적화를 통해 트랜잭션 매니저의 불필요한 동작을 방지하여 성능을 향상할 수 있습니다.
   @Override
   public List<NoticeDTO> findNotices() {
     return noticeDAO.getNotices();
   }
 
+  @Transactional(readOnly = true)  //----- 읽기 전용 최적화를 통해 트랜잭션 매니저의 불필요한 동작을 방지하여 성능을 향상할 수 있습니다.
   @Override
   public Map<String, Object> findNoticeById(Integer nid) {
     return Map.of("notice", noticeDAO.getNoticeById(nid)
@@ -37,55 +41,82 @@ public class NoticeServiceImpl implements NoticeService {
   }
 
   @Override
-  public boolean addNotice(NoticeDTO notice, List<MultipartFile> files) {
-    
-    try {
+  public boolean addNotice(NoticeDTO notice, List<MultipartFile> files) throws Exception {
 
-      //----- 공지사항 DB에 등록하기
-      System.out.println("공지사항 등록 이전 nid : " + notice.getNid());  //----- 0
-      int addedNoticeCount = noticeDAO.insertNotice(notice);  //----------------------- INSERT 수행하면서 파라미터 notice의 nid 필드에 자동 생성된 PK 값이 저장됩니다.
-      System.out.println("공지사항 등록 이후 nid : " + notice.getNid());  //----- 자동 생성된 PK 값
+    //----- 공지사항 DB에 등록하기
+    System.out.println("공지사항 등록 이전 nid : " + notice.getNid());  //----- null
+    int addedNoticeCount = noticeDAO.insertNotice(notice);  //----------------------- INSERT 수행하면서 파라미터 notice의 nid 필드에 자동 생성된 PK 값이 저장됩니다.
+    System.out.println("공지사항 등록 이후 nid : " + notice.getNid());  //----- 자동 생성된 PK 값
+    if (addedNoticeCount != 1) {
+      throw new RuntimeException("공지사항 DB 등록 실패");
+    }
+    
+    //----- 첨부파일 없으면 곧바로 공지사항 등록 성공
+    if (files == null || files.isEmpty()) {
+      return true;
+    }
+    
+    //----- 첨부파일 서버에 저장하기
+    try {
       
-      if (addedNoticeCount == 1) {        
-        for (MultipartFile file : files) {
-          //----- 첨부파일 서버에 저장하기
-          if (!file.isEmpty()) {
-            //----- 첨부 파일을 저장할 경로
-            String filePath = fileUtil.getFilePath();
-            //----- 디렉터리 없으면 생성하기
-            Path uploadPath = Paths.get(filePath);
-            if (Files.notExists(uploadPath)) {
-              Files.createDirectories(uploadPath);
-            }
-            //----- 첨부 파일의 원래 이름
-            String originalFilename = file.getOriginalFilename();
-            //----- 첨부 파일을 서버에 저장할 때 사용하는 이릅
-            String filesystemName = fileUtil.getFilesystemName(originalFilename);
-            //----- 첨부 파일을 서버에 저장
-            file.transferTo(Paths.get(filePath + "/" + filesystemName));
-            //----- 첨부파일 정보 DB에 등록하기
-            AttachDTO attach = AttachDTO.builder()
-                .nid(notice.getNid())
-                .filePath(filePath)
-                .originalFilename(originalFilename)
-                .filesystemName(filesystemName)
-                .build();
-            int addedAttachResult = noticeDAO.insertAttach(attach);
-            if (addedAttachResult == 0) {
-              return false;
-            }
-          }
+      for (MultipartFile file : files) {
+        
+        //***** 비어 있는 파일이면 다음 첨부로 넘어가기
+        if (file.isEmpty())
+          continue;
+        
+        //***** 첨부 파일을 저장할 경로(디렉터리)
+        String filePath = fileUtil.getFilePath();
+        
+        //***** 디렉터리 없으면 생성하기
+        Path uploadPath = Paths.get(filePath);
+        if (Files.notExists(uploadPath)) {
+          Files.createDirectories(uploadPath);
         }
         
-        return true;
-      } else {
-        return false;
+        //***** 첨부 파일의 원래 이름
+        String originalFilename = file.getOriginalFilename();
+        
+        //***** 첨부 파일을 서버에 저장할 때 사용하는 이릅
+        String filesystemName = fileUtil.getFilesystemName(originalFilename);
+        
+        //***** 첨부 파일을 서버에 저장
+        Path targetLocation = Paths.get(filePath + "/" + filesystemName);
+        file.transferTo(targetLocation);
+        
+        //***** 첨부파일 정보 DB에 등록하기
+        AttachDTO attach = AttachDTO.builder()
+            .nid(notice.getNid())
+            .filePath(filePath)
+            .originalFilename(originalFilename)
+            .filesystemName(filesystemName)
+            .build();
+        
+        //***** DB 예외 발생 시 clean 처리를 위해 추가 try - catch
+        try {
+          int addedAttachResult = noticeDAO.insertAttach(attach);
+          if (addedAttachResult == 0) {
+            // DB 저장 실패(0 반환)
+            Files.deleteIfExists(targetLocation);
+            throw new RuntimeException("첨부파일 DB 등록 실패");
+          }
+        } catch (Exception e) {
+          // DB 저장 실패(예외 발생)
+          Files.deleteIfExists(targetLocation);
+          throw e;
+        }
+        
       }
       
     } catch (Exception e) {
-      e.printStackTrace();
-      return false;
+      
+      //----- 파일 저장이나, DB 저장 실패 시 예외를 던져 트랜잭션 롤백
+      throw new RuntimeException("첨부파일 저장 실패", e);
+      
     }
+    
+    //----- 성공
+    return true;
     
   }
 
@@ -119,6 +150,7 @@ public class NoticeServiceImpl implements NoticeService {
     return noticeDAO.deleteNoticeById(nid) == 1;
   }
 
+  @Transactional(readOnly = true)  //----- 읽기 전용 최적화를 통해 트랜잭션 매니저의 불필요한 동작을 방지하여 성능을 향상할 수 있습니다.
   @Override
   public AttachDTO findAttachById(Integer aid) {
     return noticeDAO.getAttachById(aid);

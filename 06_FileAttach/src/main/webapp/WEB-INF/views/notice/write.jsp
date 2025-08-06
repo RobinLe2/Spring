@@ -25,6 +25,10 @@
     <button type="submit">작성하기</button>
   </form>
   
+  <c:if test="${not empty error}">
+    <div style="font-size: 12px; color: red;">${error}</div>
+  </c:if>
+  
   <script type="text/javascript">
     const files = document.getElementById("files");  //----- files DOM 객체
     const limitPerFile = 1024 * 1024 * 10;  //-------------- 10MB (개별 파일 최대 크기)

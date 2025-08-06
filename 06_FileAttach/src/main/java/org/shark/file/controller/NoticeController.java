@@ -41,10 +41,21 @@ public class NoticeController {
   @PostMapping("/write")
   public String write(NoticeDTO notice  //------------------------------------ title, content 정보를 받습니다.
                     , @RequestParam("files") List<MultipartFile> files  //---- <input type="file" multiple> 양식을 받을 때는 List나 배열을 사용합니다.
-                    , RedirectAttributes redirectAttr) {
-    boolean result = noticeService.addNotice(notice, files);
-    redirectAttr.addFlashAttribute("msg", result ? "공지사항 등록 성공" : "공지사항 등록 실패");
-    return "redirect:/notice/list";
+                    , RedirectAttributes redirectAttr
+                    , Model model) {
+    try {
+      
+      boolean result = noticeService.addNotice(notice, files);
+      redirectAttr.addFlashAttribute("msg", result ? "공지사항 등록 성공" : "공지사항 등록 실패");
+      return "redirect:/notice/list";
+      
+    } catch (Exception e) {
+      
+      e.printStackTrace();
+      model.addAttribute("error", "공지사항 등록 중 오류가 발생했습니다.");
+      return "notice/write";
+      
+    }
   }
   
   @GetMapping("/detail")

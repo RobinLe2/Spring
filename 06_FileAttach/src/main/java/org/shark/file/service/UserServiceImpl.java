@@ -9,10 +9,12 @@ import org.shark.file.model.dto.UserDTO;
 import org.shark.file.repository.UserDAO;
 import org.shark.file.util.FileUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional  //----- 서비스 클래스 레벨에 설정한 @Transactional에 의해서 모든 메소드는 트랜잭션 처리가 됩니다.
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,11 +22,13 @@ public class UserServiceImpl implements UserService {
   private final UserDAO userDAO;
   private final FileUtil fileUtil;
   
+  @Transactional(readOnly = true)  //----- 읽기 전용 최적화를 통해 트랜잭션 매니저의 불필요한 동작을 방지하여 성능을 향상할 수 있습니다.
   @Override
   public List<UserDTO> findAllUsers() {
     return userDAO.getAllUsers();
   }
 
+  @Transactional(readOnly = true)  //----- 읽기 전용 최적화를 통해 트랜잭션 매니저의 불필요한 동작을 방지하여 성능을 향상할 수 있습니다.
   @Override
   public UserDTO findUserById(Integer uid) {
     return userDAO.getUserById(uid);
