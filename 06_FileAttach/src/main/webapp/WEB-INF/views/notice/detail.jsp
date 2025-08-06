@@ -24,15 +24,7 @@
   
   <button type="button" onclick="onDelete()">삭제</button>
   <script type="text/javascript">
-  
-    //----- 다운로드 요청 시 <a> 태그의 href를 이용한 페이지 이동 동작 막기
-    const downloadLinks = document.getElementsByClassName("download-links");
-    for (const downloadLink of downloadLinks) {
-      downloadLink.addEventListener("click", function(e) {
-        e.preventDefault();  //----- <a> 태그의 기본 이벤트 방지
-      })
-    }
-    
+
     //----- 삭제
     function onDelete() {
       if (confirm("현재 공지사항을 삭제할까요?")) {

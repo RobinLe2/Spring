@@ -11,6 +11,8 @@ import org.shark.file.model.dto.AttachDTO;
 import org.shark.file.model.dto.NoticeDTO;
 import org.shark.file.repository.NoticeDAO;
 import org.shark.file.util.FileUtil;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -117,4 +119,14 @@ public class NoticeServiceImpl implements NoticeService {
     return noticeDAO.deleteNoticeById(nid) == 1;
   }
 
+  @Override
+  public AttachDTO findAttachById(Integer aid) {
+    return noticeDAO.getAttachById(aid);
+  }
+  
+  @Override
+  public Resource loadAttachAsResource(AttachDTO attach) {
+    return new FileSystemResource(attach.getFilePath() + "/" + attach.getFilesystemName());
+  }
+  
 }

@@ -48,4 +48,10 @@
      WHERE nid = #{nid}
   </delete>
   
+  <select id="getAttachById" parameterType="java.lang.Integer" resultType="AttachDTO">
+    SELECT aid, nid, file_path, original_filename, filesystem_name
+      FROM tbl_attach
+     WHERE aid = #{aid}
+  </select>
+  
 </mapper>

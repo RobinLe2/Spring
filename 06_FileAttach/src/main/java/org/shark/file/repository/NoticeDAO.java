@@ -45,4 +45,8 @@ public class NoticeDAO {
     return sqlSession.delete("mybatis.mapper.noticeMapper.deleteNoticeById", nid);
   }
   
+  public AttachDTO getAttachById(Integer aid) {
+    return sqlSession.selectOne("mybatis.mapper.noticeMapper.getAttachById", aid);
+  }
+  
 }
