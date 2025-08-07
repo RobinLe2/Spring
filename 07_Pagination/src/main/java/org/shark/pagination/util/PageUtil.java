@@ -60,6 +60,17 @@ public class PageUtil {
     
     StringBuilder builder = new StringBuilder();
     
+    //----- 스타일 적용 예시
+    builder.append("<style>");
+    builder.append(".pagination { display: flex; justify-content: center; width: 400px; margin: 0 auto; }");
+    builder.append(".pagination button { display: block; border: none; background-color: #fff; text-align: center; width: 30px; height: 30px; line-height: 30px; cursor: pointer; }");
+    builder.append(".pagination .disabled-button { color: silver; cursor: auto; }");
+    builder.append(".pagination .focus-page { color: limegreen; }");
+    builder.append("</style>");
+    
+    //----- <div class="pagination">
+    builder.append("<div class=\"pagination\">");
+    
     //----- 이전 블록 ( < )
     if(beginPage == 1)
       builder.append("<button type=\"button\" class=\"disabled-button\">&lt;</button>");
@@ -79,6 +90,9 @@ public class PageUtil {
       builder.append("<button type=\"button\" class=\"disabled-button\">&gt;</button>");
     else
       builder.append("<button type=\"button\" onclick=\"location.href='" + requestURL + "?page=" + (endPage + 1) + queryString + "'\">&gt;</button>");
+    
+    //----- </div>
+    builder.append("</div>");
     
     return builder.toString();
     
