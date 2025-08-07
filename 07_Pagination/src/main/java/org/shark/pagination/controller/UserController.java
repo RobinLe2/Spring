@@ -27,6 +27,7 @@ public class UserController {
     Map<String, Object> map = userService.getUsers(dto, request);
     model.addAttribute("users", map.get("users"));
     model.addAttribute("pagingHtml", map.get("pagingHtml"));
+    model.addAttribute("size", map.get("size"));
     return "user/list";
   }
   

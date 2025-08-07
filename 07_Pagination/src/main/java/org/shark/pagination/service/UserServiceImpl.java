@@ -34,9 +34,9 @@ public class UserServiceImpl implements UserService {
     //----- 목록 가져오기
     List<UserDTO> users = userDAO.getUsers(Map.of("offset", dto.getOffset(), "size", dto.getSize(), "sort", sort));
     //----- 페이징 UI(Html) 가져오기
-    String pagingHtml = pageUtil.getPagingHtml(dto, request.getContextPath() + "/user/list", null);
+    String pagingHtml = pageUtil.getPagingHtml(dto, request.getContextPath() + "/user/list", Map.of("size", dto.getSize(), "sort", sort));
     //----- 결과 반환
-    return Map.of("users", users, "pagingHtml", pagingHtml);
+    return Map.of("users", users, "pagingHtml", pagingHtml, "size", dto.getSize());
   }
 
 }

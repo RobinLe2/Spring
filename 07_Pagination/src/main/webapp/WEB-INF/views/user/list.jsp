@@ -14,9 +14,15 @@
   <h1>회원 목록</h1>
   
   <a href="${contextPath}/user/list?sort=DESC">최신순</a>
-  <br>
+  |
   <a href="${contextPath}/user/list?sort=ASC">과거순</a>
-  <br>
+  |
+  <select id="size">
+    <option>20</option>
+    <option>50</option>
+    <option>100</option>
+  </select>
+  <br><br>
   
   <table border="1">
     <tbody>
@@ -37,6 +43,15 @@
       </tr>
     </tfoot>
   </table>
+  
+  <script type="text/javascript">
+  	const selectSize = document.getElementById("size");
+  	selectSize.addEventListener("change", function(e){
+  	  location.href = "${contextPath}/user/list?size=" + selectSize.value;
+  	})
+  	
+  	selectSize.value = ${size};
+  </script>
   
 </body>
 </html>
