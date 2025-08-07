@@ -39,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
     return Map.of("notice", noticeDAO.getNoticeById(nid)
                 , "attaches", noticeDAO.getAttaches(nid));
   }
-
+  
   @Override
   public boolean addNotice(NoticeDTO notice, List<MultipartFile> files) throws Exception {
 

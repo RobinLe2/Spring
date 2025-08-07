@@ -4,11 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatis.mapper.userMapper">
  
-  <select id="getUsers" parameterType="PageDTO" resultType="UserDTO">
+  <select id="getUsers" parameterType="Map" resultType="UserDTO">
     SELECT uid, first_name, last_name, email, gender, ip_address
       FROM tbl_user
-     ORDER BY uid DESC
+     ORDER BY uid ${sort}
      LIMIT #{offset}, #{size}
+  </select>
+  
+  <select id="getUserCount" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+      FROM tbl_user
   </select>
  
 </mapper>

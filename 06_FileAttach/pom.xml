@@ -35,7 +35,13 @@
     3. JSTL 1.2
   -->
   <dependencies>
-  
+  <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjrt</artifactId>
+    <version>1.9.22.1</version>
+    <scope>runtime</scope>
+</dependency>
     <!-- Spring Web MVC : Spring MVC Project를 위한 필수 디펜던시 -->
     <dependency>
       <groupId>org.springframework</groupId>
