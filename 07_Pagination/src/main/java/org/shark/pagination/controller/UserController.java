@@ -31,9 +31,9 @@ public class UserController {
     return "user/list";
   }
   
+  @GetMapping("/scroll-list")
+  public String scrollList() {
+    return "user/scroll";
+  }
+  
 }
-
-
-
-
-
