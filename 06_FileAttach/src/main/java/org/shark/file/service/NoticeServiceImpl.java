@@ -14,10 +14,12 @@ import org.shark.file.util.FileUtil;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional  //---- 서비스 클래스 레벨에 설정한  @Transactional에 의해서 모든 메소드는 트랜잭션 처리가 됩니다.
 @RequiredArgsConstructor
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -25,11 +27,13 @@ public class NoticeServiceImpl implements NoticeService {
   private final NoticeDAO noticeDAO;
   private final FileUtil fileUtil;
   
+  @Transactional(readOnly = true) //---- 트랜젝션 제외 , 읽기 전용 최적화를 통해 트랜잭션 메니저의 불필요한 동작을 방지하여 성능을 향상 할 수 있음.
   @Override
   public List<NoticeDTO> findNotices() {
     return noticeDAO.getNotices();
   }
-
+  
+  @Transactional(readOnly = true)
   @Override
   public Map<String, Object> findNoticeById(Integer nid) {
     return Map.of("notice", noticeDAO.getNoticeById(nid)
@@ -118,11 +122,12 @@ public class NoticeServiceImpl implements NoticeService {
     //----- DB에서 공지사항 삭제하기 (ON DELETE CASCADE에 의해서 첨부 목록은 함께 삭제됩니다.)
     return noticeDAO.deleteNoticeById(nid) == 1;
   }
-
+  @Transactional(readOnly = true)
   @Override
   public AttachDTO findAttachById(Integer aid) {
     return noticeDAO.getAttachById(aid);
   }
+  
   
   @Override
   public Resource loadAttachAsResource(AttachDTO attach) {
