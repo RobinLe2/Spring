@@ -45,7 +45,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     //----- 공지사항 DB에 등록하기
     System.out.println("공지사항 등록 이전 nid : " + notice.getNid());  //----- null
-    int addedNoticeCount = noticeDAO.insertNotice(notice);  //----------------------- INSERT 수행하면서 파라미터 notice의 nid 필드에 자동 생성된 PK 값이 저장됩니다.
+    int addedNoticeCount = noticeDAO.insertNotice(notice);  //------------- INSERT 수행하면서 파라미터 notice의 nid 필드에 자동 생성된 PK 값이 저장됩니다.
     System.out.println("공지사항 등록 이후 nid : " + notice.getNid());  //----- 자동 생성된 PK 값
     if (addedNoticeCount != 1) {
       throw new RuntimeException("공지사항 DB 등록 실패");

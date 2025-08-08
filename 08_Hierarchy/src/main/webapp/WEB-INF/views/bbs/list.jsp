@@ -10,6 +10,32 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <a href="${contextPath}/bbs/list">계층게시판</a>
+
+  <h1>BBS 계층게시판</h1>
+  
+  <form method="post"
+        action="${contextPath}/bbs/writeBbs">
+    <textarea name="content"></textarea>
+    <br>
+    <button type="submit">게시글 등록</button>
+  </form>
+  
+  <hr>
+  
+  <table border="1">
+    <tbody>    
+      <c:forEach items="${bbsList}" var="bbs">
+      
+      </c:forEach>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="1">
+        
+        </td>
+      <tr>
+    </tfoot>
+  </table>
+
 </body>
 </html>

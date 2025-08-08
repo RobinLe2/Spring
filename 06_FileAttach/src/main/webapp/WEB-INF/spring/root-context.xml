@@ -41,7 +41,7 @@
   
   <!-- @Transactional 어노테이션을 이용한 트랜잭션 처리 -->
   <tx:annotation-driven transaction-manager="transactionManager" />
-  <aop:aspectj-autoproxy />
+  
   <!-- 파일 첨부 시 CommonMultipartResolver 타입의 "multipartResolver" 이름을 가진 빈 등록이 필요합니다. -->
   <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
     <property name="defaultEncoding" value="UTF-8" />
