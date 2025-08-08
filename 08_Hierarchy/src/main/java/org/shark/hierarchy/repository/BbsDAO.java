@@ -20,7 +20,7 @@ public class BbsDAO {
   }
   
   public int updateGroupId(BbsDTO bbsDTO) {
-    return sqlSession.update("mybatis.mapper.bbsMapper.updateGroupId", bbsDTO);
+    return sqlSession.update("mybatis.mapper.bbsMapper.updateGroupI", bbsDTO);
   }
 
   public int updateGroupOrder(BbsDTO bbsDTO) {

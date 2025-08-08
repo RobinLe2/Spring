@@ -100,11 +100,4 @@ public class NoticeController {
               .body(resource);
   }
   
-  
-  
-  
-  
-  
-  
-  
 }
