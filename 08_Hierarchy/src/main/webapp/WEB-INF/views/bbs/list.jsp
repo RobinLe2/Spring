@@ -77,7 +77,7 @@
       <tr>
         <td colspan="2">
           <div class="pagination">
-            
+            <!-- 이전 블록 -->
             <c:choose>
               <c:when test="${pageDTO.beginPage eq 1}">
                 <button type="button" class="disabled-button">&lt;</button>
@@ -86,7 +86,7 @@
                 <button type="button" onclick="location.href='${contextPath}/bbs/list?page=${pageDTO.beginPage-1}'">&lt;</button>
               </c:otherwise>
             </c:choose>
-            
+            <!-- 1 2 3 4 5 6 7 8 9 10 -->
             <c:forEach var="p" begin="${pageDTO.beginPage}" end="${pageDTO.endPage}" step="1">
               <c:choose>
                 <c:when test="${p eq pageDTO.page}">
@@ -97,7 +97,7 @@
                 </c:otherwise>
               </c:choose>
             </c:forEach>
-            
+            <!-- 다음 블록 -->
             <c:choose>
               <c:when test="${pageDTO.endPage eq pageDTO.pageCount}">
                 <button type="button" class="disabled-button">&gt;</button>
@@ -106,7 +106,6 @@
                 <button type="button" onclick="location.href='${contextPath}/bbs/list?page=${pageDTO.endPage+1}'">&gt;</button>
               </c:otherwise>
             </c:choose>
-            
           </div>
         </td>
       <tr>
@@ -161,7 +160,6 @@
       }
       
     })
-
   
   </script>
 
