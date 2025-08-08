@@ -4,7 +4,7 @@ USE db_hierarchy;
 
 DROP TABLE IF EXISTS tbl_bbs;
 CREATE TABLE IF NOT EXISTS tbl_bbs (
-	bbs_id      INT NOT NULL AUTO_INCREMENT,
+	bbs_id      INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	content     VARCHAR(100),
 	state       INT DEFAULT 1,  # 0:삭제, 1:정상
   depth       INT,  # 0:게시글, 1:답글, 2:답답글, ...
