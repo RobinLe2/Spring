@@ -39,7 +39,7 @@
 
   <insert id="insertAttach" parameterType="AttachDTO">
     INSERT INTO tbl_attach (nid, file_path, original_filename, filesystem_name) 
-    VALUES (#{nid}, #{file_Path}, #{originalFilename}, #{filesystemName}) 
+    VALUES (#{nid}, #{filePath}, #{originalFilename}, #{filesystemName}) 
   </insert>
   
   <delete id="deleteNoticeById" parameterType="java.lang.Integer">
