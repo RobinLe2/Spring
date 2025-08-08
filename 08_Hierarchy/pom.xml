@@ -4,7 +4,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.shark</groupId>
-  <artifactId>project</artifactId>
+  <artifactId>08_Hierarchy</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
   
@@ -116,10 +116,15 @@
       <scope>test</scope>
     </dependency>
     
-    <!-- Database (Spring JDBC, MySQL Connector/J, MyBatis, MyBatis Spring, HikariCP -->
+    <!-- Database (Spring JDBC, Spring TX, MySQL Connector/J, MyBatis, MyBatis Spring, HikariCP) -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
       <version>${spring.version}</version>
     </dependency>
     <dependency>
