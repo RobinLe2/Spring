@@ -76,7 +76,38 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          페이징 1 2 3 4 5 
+          <div class="pagination">
+            
+            <c:choose>
+              <c:when test="${pageDTO.beginPage eq 1}">
+                <button type="button" class="disabled-button">&lt;</button>
+              </c:when>
+              <c:otherwise>
+                <button type="button" onclick="location.href='${contextPath}/bbs/list?page=${pageDTO.beginPage-1}'">&lt;</button>
+              </c:otherwise>
+            </c:choose>
+            
+            <c:forEach var="p" begin="${pageDTO.beginPage}" end="${pageDTO.endPage}" step="1">
+              <c:choose>
+                <c:when test="${p eq pageDTO.page}">
+                  <button type="button" class="focus-page">${p}</button>
+                </c:when>
+                <c:otherwise>
+                  <button type="button" onclick="location.href='${contextPath}/bbs/list?page=${p}'">${p}</button>
+                </c:otherwise>
+              </c:choose>
+            </c:forEach>
+            
+            <c:choose>
+              <c:when test="${pageDTO.endPage eq pageDTO.pageCount}">
+                <button type="button" class="disabled-button">&gt;</button>
+              </c:when>
+              <c:otherwise>
+                <button type="button" onclick="location.href='${contextPath}/bbs/list?page=${pageDTO.endPage+1}'">&gt;</button>
+              </c:otherwise>
+            </c:choose>
+            
+          </div>
         </td>
       <tr>
     </tfoot>
