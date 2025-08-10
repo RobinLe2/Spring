@@ -4,6 +4,11 @@
 # Servers
 Servers
 
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
 ### Eclipse ###
 .metadata
 bin/
